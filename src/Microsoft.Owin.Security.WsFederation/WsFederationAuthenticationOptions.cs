@@ -3,10 +3,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens;
 using System.Net.Http;
-using Microsoft.IdentityModel.Extensions;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.WsFederation;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.WsFederation
 {

@@ -4,8 +4,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using Microsoft.IdentityModel.Extensions;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.WsFederation;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security.DataHandler;
 using Microsoft.Owin.Security.DataProtection;
@@ -74,7 +74,7 @@ namespace Microsoft.Owin.Security.WsFederation
                     HttpClient httpClient = new HttpClient(ResolveHttpMessageHandler(Options));
                     httpClient.Timeout = Options.BackchannelTimeout;
                     httpClient.MaxResponseContentBufferSize = 1024 * 1024 * 10; // 10 MB
-                    Options.ConfigurationManager = new ConfigurationManager<WsFederationConfiguration>(Options.MetadataAddress, httpClient);
+                    Options.ConfigurationManager = new ConfigurationManager<WsFederationConfiguration>(Options.MetadataAddress, new WsFederationConfigurationRetriever(), httpClient);
                 }
             }
         }

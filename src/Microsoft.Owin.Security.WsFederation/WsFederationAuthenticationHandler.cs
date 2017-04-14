@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Extensions;
-using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.WsFederation;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.Notifications;
@@ -57,7 +56,7 @@ namespace Microsoft.Owin.Security.WsFederation
             {
                 IssuerAddress = _configuration.TokenEndpoint ?? string.Empty,
                 Wtrealm = Options.Wtrealm,
-                Wa = WsFederationActions.SignOut,
+                Wa = WsFederationConstants.WsFederationActions.SignOut,
             };
 
             // Set Wreply in order:
@@ -140,7 +139,7 @@ namespace Microsoft.Owin.Security.WsFederation
                 IssuerAddress = _configuration.TokenEndpoint ?? string.Empty,
                 Wtrealm = Options.Wtrealm,
                 Wctx = WsFederationAuthenticationDefaults.WctxKey + "=" + Uri.EscapeDataString(Options.StateDataFormat.Protect(properties)),
-                Wa = WsFederationActions.SignIn,
+                Wa = WsFederationConstants.WsFederationActions.SignIn,
             };
 
             if (!string.IsNullOrWhiteSpace(Options.Wreply))
