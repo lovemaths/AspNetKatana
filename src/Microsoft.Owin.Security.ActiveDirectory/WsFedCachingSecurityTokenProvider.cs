@@ -82,7 +82,7 @@ namespace Microsoft.Owin.Security.ActiveDirectory
         /// <value>
         /// All known security tokens.
         /// </value>
-        public IEnumerable<SecurityToken> SecurityTokens
+        public IEnumerable<SecurityToken> SecurityKeys
         {
             get
             {

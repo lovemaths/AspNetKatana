@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.Jwt
 {
@@ -13,7 +13,7 @@ namespace Microsoft.Owin.Security.Jwt
     /// </summary>
     public class X509CertificateSecurityTokenProvider : IIssuerSecurityTokenProvider
     {
-        private readonly List<SecurityToken> _tokens = new List<SecurityToken>();
+        private readonly List<SecurityKey> _keys = new List<SecurityKey>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="X509CertificateSecurityTokenProvider"/> class.
@@ -39,7 +39,7 @@ namespace Microsoft.Owin.Security.Jwt
 
             Issuer = issuer;
 
-            _tokens.Add(new X509SecurityToken(certificate));
+            _keys.Add(new X509SecurityKey(certificate));
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Microsoft.Owin.Security.Jwt
         /// <value>
         /// All known security tokens.
         /// </value>
-        public IEnumerable<SecurityToken> SecurityTokens
+        public IEnumerable<SecurityKey> SecurityKeys
         {
-            get { return _tokens.AsReadOnly(); }
+            get { return _keys.AsReadOnly(); }
         }
     }
 }

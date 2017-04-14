@@ -71,7 +71,7 @@ namespace Microsoft.Owin.Security.Tests
 
             public virtual string Issuer { get; private set; }
 
-            public virtual IEnumerable<SecurityToken> SecurityTokens
+            public virtual IEnumerable<SecurityToken> SecurityKeys
             {
                 get { return new SecurityToken[0]; }
             }

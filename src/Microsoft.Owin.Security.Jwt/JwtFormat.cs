@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IdentityModel.Selectors;
-using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.Jwt
 {
@@ -206,15 +205,15 @@ namespace Microsoft.Owin.Security.Jwt
                     validationParameters.ValidIssuers = validationParameters.ValidIssuers.Concat(issuers);
                 }
 
-                IEnumerable<SecurityToken> tokens = _issuerCredentialProviders.Select(provider => provider.SecurityTokens)
+                IEnumerable<SecurityKey> keys = _issuerCredentialProviders.Select(provider => provider.SecurityKeys)
                     .Aggregate((left, right) => left.Concat(right));
-                if (validationParameters.IssuerSigningTokens == null)
+                if (validationParameters.IssuerSigningKeys == null)
                 {
-                    validationParameters.IssuerSigningTokens = tokens;
+                    validationParameters.IssuerSigningKeys = keys;
                 }
                 else
                 {
-                    validationParameters.IssuerSigningTokens = validationParameters.IssuerSigningTokens.Concat(tokens);
+                    validationParameters.IssuerSigningKeys = validationParameters.IssuerSigningKeys.Concat(keys);
                 }
             }
 

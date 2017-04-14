@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.Jwt
 {
@@ -20,11 +20,11 @@ namespace Microsoft.Owin.Security.Jwt
         string Issuer { get; }
 
         /// <summary>
-        /// Gets all known security tokens.
+        /// Gets all known security keys.
         /// </summary>
         /// <value>
-        /// All known security tokens.
+        /// All known security keys.
         /// </value>
-        IEnumerable<SecurityToken> SecurityTokens { get; }
+        IEnumerable<SecurityKey> SecurityKeys { get; }
     }
 }

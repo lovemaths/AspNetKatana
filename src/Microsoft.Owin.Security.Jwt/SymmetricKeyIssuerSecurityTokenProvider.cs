@@ -3,8 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
-using System.ServiceModel.Security.Tokens;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.Jwt
 {
@@ -13,7 +12,7 @@ namespace Microsoft.Owin.Security.Jwt
     /// </summary>
     public class SymmetricKeyIssuerSecurityTokenProvider : IIssuerSecurityTokenProvider
     {
-        private readonly List<SecurityToken> _tokens = new List<SecurityToken>();
+        private readonly List<SecurityKey> _keys = new List<SecurityKey>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SymmetricKeyIssuerSecurityTokenProvider"/> class.
@@ -46,7 +45,7 @@ namespace Microsoft.Owin.Security.Jwt
             Issuer = issuer;
             foreach (var key in keys)
             {
-                _tokens.Add(new BinarySecretSecurityToken(key));
+                _keys.Add(new SymmetricSecurityKey(key));
             }
         }
 
@@ -80,7 +79,7 @@ namespace Microsoft.Owin.Security.Jwt
             Issuer = issuer;
             foreach (var key in base64Keys)
             {
-                _tokens.Add(new BinarySecretSecurityToken(Convert.FromBase64String(key)));
+                _keys.Add(new SymmetricSecurityKey(Convert.FromBase64String(key)));
             }
         }
 
@@ -98,9 +97,9 @@ namespace Microsoft.Owin.Security.Jwt
         /// <returns>
         /// All known security tokens.
         /// </returns>
-        public IEnumerable<SecurityToken> SecurityTokens
+        public IEnumerable<SecurityKey> SecurityKeys
         {
-            get { return _tokens.AsReadOnly(); }
+            get { return _keys.AsReadOnly(); }
         }
     }
 }
