@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens;
 using System.Net.Http;
 using System.Threading;
 using Microsoft.Owin.Security.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Owin.Security.ActiveDirectory
 {
@@ -30,7 +30,7 @@ namespace Microsoft.Owin.Security.ActiveDirectory
 
         private string _issuer;
 
-        private IEnumerable<SecurityToken> _tokens;
+        private IEnumerable<SecurityKey> _keys;
 
         public WsFedCachingSecurityTokenProvider(string metadataEndpoint, ICertificateValidator backchannelCertificateValidator,
             TimeSpan backchannelTimeout, HttpMessageHandler backchannelHttpHandler)
@@ -77,12 +77,12 @@ namespace Microsoft.Owin.Security.ActiveDirectory
         }
 
         /// <summary>
-        /// Gets all known security tokens.
+        /// Gets all known security keys.
         /// </summary>
         /// <value>
-        /// All known security tokens.
+        /// All known security keys.
         /// </value>
-        public IEnumerable<SecurityToken> SecurityKeys
+        public IEnumerable<SecurityKey> SecurityKeys
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Microsoft.Owin.Security.ActiveDirectory
                 _synclock.EnterReadLock();
                 try
                 {
-                    return _tokens;
+                    return _keys;
                 }
                 finally
                 {
@@ -112,7 +112,7 @@ namespace Microsoft.Owin.Security.ActiveDirectory
                 IssuerSigningKeys metaData = WsFedMetadataRetriever.GetSigningKeys(_metadataEndpoint,
                     _backchannelTimeout, _backchannelHttpHandler);
                 _issuer = metaData.Issuer;
-                _tokens = metaData.Tokens;
+                _keys = metaData.Keys;
                 _syncAfter = DateTimeOffset.UtcNow + _refreshInterval;
             }
             finally
